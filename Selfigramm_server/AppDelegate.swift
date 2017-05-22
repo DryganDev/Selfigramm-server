@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Swifter
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -16,6 +17,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        print("hi")
+        
+        let server = HttpServer()
+        server["/hello"] = { .ok(.text("You asked for \($0)"))  }
+        do {
+            try server.start(9080)
+            print("Server started on port 9080")
+        } catch let err {
+            print(err)
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
